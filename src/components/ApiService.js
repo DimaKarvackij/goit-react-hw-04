@@ -1,22 +1,19 @@
 import axios from "axios";
 
-const baseURL = "https://api.unsplash.com/";
-const API_KEY = "sUVy_4Xtw_sm-woEsymdXeZecjTCOBJZTSCcmIQf3BQ";
+const YOUR_ACCESS_KEY = "8VaoYG3RVAwLIpXgyyDkSq1JDgRIQg2IQH_G6-95gbc";
 
-export const getPhotos = async (topic, page) => {
-  try {
-    const response = await axios.get(`${baseURL}/search/photos`, {
-      params: {
-        query: topic,
-        client_id: API_KEY,
-        page,
-      },
-    });
+axios.defaults.baseURL = "https://api.unsplash.com/";
 
-    console.log(response.data);
-    return response.data.results;
-  } catch (error) {
-    console.error("Error fetching articles:", error);
-    throw error;
-  }
+export const getPhotos = async (searchValue, currentPage) => {
+  const response = await axios.get("/search/photos", {
+    params: {
+      client_id: YOUR_ACCESS_KEY,
+      page: currentPage,
+      orientation: "landscape",
+      per_page: 12,
+      query: searchValue
+    }
+  });
+
+  return response.data;
 };
