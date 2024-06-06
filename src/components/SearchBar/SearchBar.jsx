@@ -20,7 +20,8 @@ export default function SearchBar({ onSubmit }) {
     }
 
     return (
-        <form className={css.container} >
+
+        <form className={css.container} onSubmit={handleSumbit}>
             <input className={css.view} onChange={handleChange}
                 type="text"
                 placeholder="Search images and photos"
@@ -29,7 +30,7 @@ export default function SearchBar({ onSubmit }) {
                 autoFocus
                 required
             />
-            <button onSubmit={handleSumbit} type="submit">Search</button>
+            <button type="submit">Search</button>
         </form>
 
     )
