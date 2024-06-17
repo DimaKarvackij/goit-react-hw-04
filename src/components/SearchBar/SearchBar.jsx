@@ -1,37 +1,42 @@
-import { useState } from 'react'
-import css from './SearchBar.module.css'
-export default function SearchBar({ onSubmit }) {
+import clsx from "clsx";
+import toast from "react-hot-toast";
+import { Field, Form, Formik } from "formik";
+import css from "./SearchBar.module.css";
 
-    const [query, setQuery] = useState('')
-
-    const handleChange = (e) => {
-        setQuery(e.target.value)
-
-
-    }
-
-    const handleSumbit = (e) => {
-        e.preventDefault()
-        if (!query.trim()) {
-            return
-        }
-        onSubmit(query)
-        setQuery('')
-    }
-
-    return (
-
-        <form className={css.container} onSubmit={handleSumbit}>
-            <input className={css.view} onChange={handleChange}
-                type="text"
-                placeholder="Search images and photos"
-                name="name"
-                value={query}
-                autoFocus
-                required
-            />
-            <button type="submit">Search</button>
-        </form>
-
-    )
+export default function SearchBar({ onSearch }) {
+  return (
+    <header className={clsx(css.header)}>
+      <Formik
+        initialValues={{ query: "" }}
+        onSubmit={(values, actions) => {
+          if (!values.query.trim()) {
+            toast.error("Please, enter the text", {
+              duration: 5000,
+              position: "top-center",
+              style: {
+                color: "blue",
+                backgroundColor: "white"
+              }
+            });
+          }
+          onSearch(values.query);
+          actions.resetForm();
+        }}
+      >
+        <Form className={clsx(css.form)}>
+          <Field
+            className={clsx(css.field)}
+            type="text"
+            name="query"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          />
+          <button className={clsx(css.btnSearch)} type="submit">
+            Search
+          </button>
+        </Form>
+      </Formik>
+    </header>
+  );
 }

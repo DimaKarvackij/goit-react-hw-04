@@ -1,18 +1,15 @@
-import ImageCard from "./ImageCard/ImageCard"
+import clsx from "clsx";
+import ImageCard from "../ImageCard/ImageCard";
+import css from "./ImageGallery.module.css";
 
-
-export default function ImageGallery({ image }) {
-    return (
-        <ul>
-            {image.map((filter) => {
-                <li key={filter.id}>
-
-                    <ImageCard image={filter} />
-                </li>
-            })}
-            <li>
-
-            </li>
-        </ul>
-    )
+export default function ImageGallery({ images, onOpenModal }) {
+  return (
+    <ul className={clsx(css.imageList)}>
+      {images.map(image => (
+        <li className={clsx(css.galleryItem)} key={image.id}>
+          <ImageCard imageData={image} onOpenModal={onOpenModal} />
+        </li>
+      ))}
+    </ul>
+  );
 }
