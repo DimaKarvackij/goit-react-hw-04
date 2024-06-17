@@ -8,5 +8,8 @@ export default function ImageCard({ image }) {
                 <img src={image.urls.small} alt={image.description} />
             </div>
         </>
+
+
+
     )
 }
